@@ -120,4 +120,4 @@ You can have the code under the following conditions:
 
 Do not delete the headers. I once wrote a book on integrated optics under contract at the university. The minute my contract ended my name vanished from this very book. Suddenly the head of the department was the author!
 
-Absolutely no warranty whatsoever, use it at your own risk (I did, no smoke yet).
+Absolutely no warranty whatsoever, use it at your own risk (I use it now for some 3 years, no smoke yet).
