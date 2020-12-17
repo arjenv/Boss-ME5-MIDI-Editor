@@ -1,4 +1,4 @@
-# Boss-ME5-Editer
+# Boss-ME5-Editor
 Javascripted webinterface MIDI control
 
 A while ago I bought an ME-5 Multi Effect pedal manufactured by Boss Roland. Great sound! It is totally analog apart from the reverb/delay. As with all stompboxes -in my experience- the sound is very different using it at home or using it in the rehearsel room or gig. The ME-5 has a headphone output and then it sounds all different again. My peer musicians do not have much patience to wait for me to get the right sound, so I try to program it at home, where the sound is different, but it is never spot on the moment I use it with another amp. What I need is a way to program my floorboard on the spot, without much effort.
