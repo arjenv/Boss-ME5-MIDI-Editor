@@ -34,7 +34,7 @@ Hardware needed:
 
 * Any raspberry would do I guess, I used a Zero W. Any computer that can handle a webserver will do, I tested it on Ubuntu.
 
-** Midi cable (USB) or self-build hardware
+** Midi cable (USB) BE SURE TO GET THE GOOD ONE WITH THE OPTICAL INTERFACE
 
 
 I will not go into every detail. Here´s the steps I took:
