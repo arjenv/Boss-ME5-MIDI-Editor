@@ -1,0 +1,112 @@
+#filedialogmodal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	/*table-layout: fixed;*/
+	/*position:relative;*/
+	padding:0px;
+	margin:0px;
+/*	width:100%;*/
+/*	height:300px;*/
+	font-size:15px;
+	font-weight: bold;
+	font-family:tahoma;
+	color:#222222;
+	border:1px solid #888888;
+/*	display: -moz-groupbox;*/
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+
+}
+.filetablehead {
+/*	text-align: center;*/
+	font-size: 25px;
+	font-family: tahoma;
+	background-color: #4dd5ff;
+	border:1px solid;
+}
+#filetable2ndheader {
+	text-align: left;
+	font-size: 20px;
+	height: 30px;
+}
+#filetable3rdheader {
+	text-align: left;
+	font-size: 15px;
+}
+#filedialogbtn {
+	height: 30px;
+	width: 60px;
+}
+#filedialogclose {
+	height: 30px;
+	width: 60px;
+}
+.header1cell1 {
+	text-align: center;
+	width: 60%
+}
+.header1cell3 {
+	text-align: left;
+	width: 20%;
+}
+.filedialogtbody {
+	height: 300px;
+	overflow-y: scroll;
+	position: absolute;
+	width: 100%;
+	border:1px solid;
+}
+.filedialogcontents {
+	height: 0;
+}
+.tblcellone {
+	width: 60%;
+}
+.tblheadcell1 {
+	width: 60%;
+/*	border: 1px solid;*/
+	height: 25px;
+	}
+.tblheadcell2, .tblheadcell3 {
+	width: 20%;
+	}
+.tblcell1 {
+	width: 60%;
+/*	border: 1px solid;*/
+	height: 35px;
+	font-size: 15px;
+	}
+.tblcell2, .tblcell3 {
+	width: 20%;
+/*	border: 1px solid;*/
+	font-size: 15px;
+	}
+.filerow{
+	cursor:pointer;
+}
+.filerow:hover{
+	background-color:lightcoral;
+}
+
+.oddrow{
+	background-color:#EEEEEE;
+}
+.evenrow{
+	background-color:#DDDDDD;
+}
+#filedialogname {
+	width: 90%;
+	font-size: 15px;
+}
+.folder {
+	font-weight: bold;
+	color: #1937CC;
+}
+tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}

@@ -1,0 +1,150 @@
+body {
+	background-color : #EEEEEE;
+	width: 90%;
+	padding: 10px;
+	
+	}
+
+#container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	}
+h2 {
+	color: #D6000F;
+	text-align: center;
+	font-weight: bold;
+	font-size: 175%
+}
+/*#Button {
+	text-align: center;
+	display: table;
+	width: 100%;
+	font-size: 200%
+	}*/
+.updownbutton {
+	width: 100px;
+	height: 50px;
+	padding: 10px;
+	text-align: center;
+	font-size: 200%;
+}
+.saveloadbutton, .StoreTempsetting, .FileDialogButton{
+	width: 75px;
+	height: 50px;
+	padding: 10px;
+	text-align: center;
+	font-size: 120%;
+	font-weight: bold;
+}
+input[type="number"] {
+   width:30px;
+   height: 30px;
+}
+
+table, td {
+/*	table-layout: fixed;*/
+	/*width: 100%;*/
+	border: 1px solid black;
+	/*margin: 10px;*/
+	line-height: 30px;
+	padding-bottom: 2px;
+}
+#copyright {
+	font-weight: bold;
+	color: #D6000F;
+	text-indent: 10px;
+}
+#patchstring {
+	text-indent: 10px
+}
+.me5Saveload {
+	table-layout: fixed;
+	width: 100%;
+}
+.saveloadTD {
+	padding: 10px;
+	width: 30%;
+}
+.filetransfercell1 {
+	width: 30%;
+}
+.filetransfercell2 {
+	width: 70%;
+}
+.updownbtn {
+	text-align: center;
+}
+.centercell {
+	text-align: center;
+}
+.effectheader {
+	cursor: pointer;
+}
+input[type="radio"] {
+    -ms-transform: scale(2.0); /* IE 9 */
+    -webkit-transform: scale(2.0); /* Chrome, Safari, Opera */
+    transform: scale(2.0);
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+.slideheadercenter {
+	text-align: center;
+	font-size:small
+}
+.slideheaderleft {
+	float: left;
+	margin-left: 3%
+}
+.slideheaderright {
+	float: right;
+	margin-right: 3%
+}
+.messagewindow {
+	text-align: left;
+	padding-left: 10px;
+	height: 30px;
+}
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+/*    appearance: none;*/
+    width: 95%; /* Full-width */
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+
+    outline: none; /* Remove outline */
+    opacity: 0.70; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use webkit (Chrome, Opera, Safari, Edge) and moz (Firefox) to override default look) */
+
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 50px; /* Set a specific slider handle width */
+    height: 30px; /* Slider handle height */
+    border-radius: 5px;
+    background: url('faderknob.png');
+/*    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 50px; /* Set a specific slider handle width */
+    height: 30px; /* Slider handle height */
+    border-radius: 5px;
+    background: url('faderknob.png');
+/*    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
