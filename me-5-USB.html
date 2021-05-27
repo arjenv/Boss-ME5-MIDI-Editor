@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ME-5 Editor (c) AVTUBE</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<meta name="author" content="arjen" lang="English">
+	<meta name="copyright" content="AVTUBE" lang="English">
+	<meta name="date" content="2018-11-07T18:54:44+0100" lang="English">
+	<meta name="description" content="Boss ME-5 editor" lang="English">
+	<link rel="stylesheet" type="text/css" href="css/me-5.css" />
+	<link rel="stylesheet" type="text/css" href="css/popup1.css" />
+	<link rel="stylesheet" type="text/css" href="css/filedialog.css" />
+<!--	<script type="text/javascript" src="js/ajax.js"></script> -->
+	<script type="text/javascript" src="js/filedialog.js"></script>
+	<meta charset="utf-8"/> <!-- shuts up warning -->
+	<script src="js/jquery-3.2.1.js"></script>
+	<script src="js/addloadevent.js"></script>
+	<script type="text/javascript" src="js/me-5script-USB.js" defer></script>
+</head>
+
+<!--/***********************************************************
+*
+*	me-5.html
+*
+*	webpage to control Boss ME-5 floorboard
+*
+*	Author: 	Arjen
+*	Date:		september 2017
+*
+*	Please do not change or delete this header
+*	arjen_r (a) hotmail.com
+*
+************************************************************/-->
+
+<!-- <body onload = "ME5readall()"><div id="container"> -->
+<body onload = "ME5detect_USB()"><div id="container">
+
+<div id="Buttons">
+	<table class="me5table">
+		<tr><td colspan="4"><h2 id="Switchmanual" class="effectheader" onclick="ToggleManual();">ME-5 Editor</h2></td></tr>
+		<tr class="centercell"><td></td>
+			<td>Group</td>
+			<td>Bank</td>
+			<td>Number</td></tr>
+		<tr class="centercell">
+			<td>1</td><td> <input type="radio" name="ME5Group" value="0" checked onclick="changePatchnr()"> </td>
+			<td><input type="radio" name="ME5Bank" value="0" checked onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Number" value="0" checked onclick="changePatchnr()"></td></tr>
+		<tr class="centercell"> 
+			<td>2</td><td> <input type="radio" name="ME5Group" value="16" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Bank" value="4" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Number" value="1" onclick="changePatchnr()"></td></tr>
+		<tr class="centercell">
+			<td>3</td><td>  <input type="radio" name="ME5Group" value="32" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Bank" value="8" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Number" value="2" onclick="changePatchnr()"></td></tr>
+		<tr class="centercell">
+			<td>4</td><td>  <input type="radio" name="ME5Group" value="48" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Bank" value="12" onclick="changePatchnr()"></td>
+			<td><input type="radio" name="ME5Number" value="3" onclick="changePatchnr()"></td></tr>
+		<tr><td colspan="2" id="copyright">(c) AVtube</td><td colspan="2"><p id = "patchstring"># 1 1 1 &#8594; 1</p></td></tr>
+		<tr><td colspan="2" class="updownbtn"><button class="updownbutton" name="PatchUp" value="1" 
+			onclick="patchupdown(this.value)">&#8593;</button></td> 
+			<td colspan="2" class="updownbtn"><button class="updownbutton" name="PatchDown" value="-1" 
+			onclick="patchupdown(this.value)">&#8595;</button></td></tr>
+		<tr class="centercell">
+			<td class="messagewindowleft" colspan="2" id="messagewindowleft" >Trying to connect....</td>
+			<td class="messagewindowright" colspan="2" id="messagewindowright">Waiting for connection...</td></tr>
+	</table>
+</div>
+<BR><BR><BR><BR>
+
+<!-- Compressor -->
+
+<table class="me5compressor">
+	<tr><td colspan="8"><h2>
+		<span id="CompressorOn" class="effectheader" onclick="ToggleCompressor();">Compressor</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Sustain: <span id="CompSustainValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="6" class="slider" id="CompSustain">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Attack: <span id="CompAttackValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="2" class="slider" id="CompAttack">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">-6</div>
+			Tone: <span id="CompToneValue"></span>
+			<div class="slideheaderright">+6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="CompTone">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Level: <span id="CompLevelValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="2" class="slider" id="CompLevel">
+			</div></td></tr>
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button></td>
+		<td colspan="5"><p id = "MSGComp">Save to patch</p></td></tr>
+</table>
+
+<!-- End Compressor -->
+
+<BR><BR><BR><BR>
+
+<!-- Overdrive -->
+
+<table class="me5overdrive">
+	<tr><td colspan="8"><h2><span id="OverdriveOn" class="effectheader" 
+		onclick="ToggleOverdrive();">Overdrive/Distortion</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">1</div>
+			Mode: <span id="OverdriveModeValue"></span>
+			<div class="slideheaderright">3</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="2" value="0" class="slider" id="OverdriveMode">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Drive: <span id="OverdriveDriveValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="2" class="slider" id="OverdriveDrive">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Level: <span id="OverdriveLevelValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="0" class="slider" id="OverdriveLevel">
+			</div></td></tr>
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button></td>
+		<td colspan="5"><p id = "MSGOverdrive">Save to Patch</p></td></tr>
+</table>
+
+<!-- End Overdrive -->
+
+<BR><BR><BR><BR>
+
+<!-- Equalizer -->
+
+<table class="me5equalizer">
+	<tr><td colspan="8"><h2>
+		<span id="EqualizerOn" class="effectheader" onclick="ToggleEqualizer();">Equalizer</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.5</div>
+			Mid-Frequency: <span id="EqualizerMidFreqValue"></span>
+			<div class="slideheaderright">2.0</div></div>
+			<div class="slidecontainer">
+ 			<input type="range" min="0" max="2" value="2" class="slider" id="EqualizerMidFreq">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">-6</div>
+			Treble: <span id="EqualizerHiLevelValue"></span>
+			<div class="slideheaderright">+6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="EqualizerHiLevel">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">-6</div>
+			Middle: <span id="EqualizerMidLevelValue"></span>
+			<div class="slideheaderright">+6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="EqualizerMidLevel">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">-6</div>
+			Bass: <span id="EqualizerLoLevelValue"></span>
+			<div class="slideheaderright">+6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="EqualizerLoLevel">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">-6</div>
+			Volume: <span id="EqualizerTotalLevelValue"></span>
+			<div class="slideheaderright">+6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="EqualizerTotalLevel">
+			</div></td></tr>
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button>
+		</td></td><td colspan="5"><p id = "MSGEqualizer">Save to Patch</p></td></tr>
+</table>
+
+<!-- End Equalizer -->
+
+<BR><BR><BR><BR>
+
+<!-- Chorus/Flanger -->
+
+<table class="me5chorus">
+	<tr><td colspan="8"><h2>
+		<span id="ChorusOn" class="effectheader" onclick="ToggleChorus();">Chorus/Flanger</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">1</div>
+			Mode: <span id="ChorusModeValue"></span>
+			<div class="slideheaderright">5</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="4" value="0" class="slider" id="ChorusMode">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Rate: <span id="ChorusRateValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="70" value="2" class="slider" id="ChorusRate">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Depth: <span id="ChorusDepthValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="ChorusDepth">
+			</div></td></tr>
+	<tr class="centercell"> 
+	<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Resonance: <span id="ChorusResonanceValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="ChorusResonance">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Level: <span id="ChorusLevelValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="ChorusLevel">
+			</div></td></tr>
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button>
+		</td><td colspan="5"><p id = "MSGChorus">Save to Patch</p></td></tr>
+</table>
+
+<!-- End Chorus/Flanger -->
+
+<BR><BR><BR><BR>
+
+<!-- Reverb/Delay 
+for ranging minmax see https://www.w3schools.com/Jsref/prop_range_max.asp
+-->
+
+<table class="me5Reverb">
+	<tr><td colspan="8"><h2>
+		<span id="ReverbOn" class="effectheader" onclick="ToggleReverb();">Reverb/Delay</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">1</div>
+			Mode: <span id="ReverbModeValue"></span>
+			<div class="slideheaderright">6</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="5" value="0" class="slider" id="ReverbMode">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft"></div>
+			Time: <span id="ReverbTimeValue"></span>
+			<div class="slideheaderright"></div></div>
+			
+			<!-- the Time slider min/max values depend on the mode -->
+			<div class="slidecontainer"><input type="range" min="0" max="14" value="2" class="slider" 
+				id="ReverbTime"></div></td></tr>
+
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Delay Feedback (Delay only): <span id="ReverbDelayFBValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="0" class="slider" id="ReverbDelayFB">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Tone: <span id="ReverbToneValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="0" class="slider" id="ReverbTone">
+			</div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Level: <span id="ReverbLevelValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="12" value="0" class="slider" id="ReverbLevel">
+			</div></td></tr>
+
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button>
+		</td></td><td colspan="5"><p id = "MSGReverb">Save to Patch</p></td></tr>
+</table>
+
+<!-- End Reverb/delay -->
+
+<BR><BR><BR><BR>
+
+<!-- Noise suppressor/Send-Return/Master-Level -->
+
+<table class="me5NSM">
+	<tr><td colspan="8"><h2><span id="NSMOn">Master Level</span></h2></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0</div>
+			Noise Suppression: <span id="NSMNoiseValue"></span>
+			<div class="slideheaderright">7</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="7" value="0" class="slider" id="NSMNoise">
+			</div></td></tr>
+	<tr class="centercell">
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">OFF</div>
+			Send/Return: <span id="NSMSendReturnValue"></span>
+			<div class="slideheaderright">ON</div></div>
+			<div class="slidecontainer"><input type="range" min="0" max="1" value="0" class="slider" id="NSMSendReturn"></div></td></tr>
+	<tr class="centercell"> 
+		<td colspan="8"><div class="slideheadercenter"><div class="slideheaderleft">0.0</div>
+			Master Level: <span id="NSMMasterLevelValue"></span>
+			<div class="slideheaderright">7.0</div></div>
+			<div class="slidecontainer">
+  			<input type="range" min="0" max="70" value="0" class="slider" id="NSMMasterLevel">
+			</div></td></tr>
+	<tr class="centercell"><td colspan="8"></td></tr>
+	<tr><td colspan="3" style="padding-left:10px">
+		<!-- Trigger/Open The Modal -->
+		<button class="StoreTempsetting">Save</button>
+		</td></td><td colspan="5"><p id = "MSGMaster">Save to Patch</p></td></tr>
+</table>
+
+<!-- End NSM -->
+
+<BR><BR><BR><BR>
+
+<!-- Save/Load -->
+
+<table class="me5SaveLoad">
+	<tr><td colspan="2"><h2>Save/Load to File</h2></td></tr>
+	<tr class="centercell"><td class="saveloadTD" >
+		<button class="FileDialogButton" onclick="filepopup(0)"/>Save</button></td>
+		<td class="filetransfercell2">Save patch to File</td></tr>
+	<tr class="centercell"><td class="saveloadTD">
+		<button class="FileDialogButton" onclick="filepopup(1)"/>Load</button></td>
+		<td class="filetransfercell2">Load patch from File</td></tr>
+	<tr class="centercell"><td class="saveloadTD">
+		<button class="FileDialogButton" onclick="filepopup(2)">DSave</button></td>
+		<td class="filetransfercell2">Dump Save all Patches</td></tr>
+	<tr class="centercell"><td class="saveloadTD">
+		<button class="FileDialogButton" onclick="filepopup(3)">DLoad</button></td>
+		<td class="filetransfercell2">Dump Load all patches</td></tr>
+	<tr class="centercell"><td colspan="2"></td></tr>
+	<tr><td class="saveloadTD"></td><td class="filetransfercell2">
+		<p id = "MSGSaveLoad">Warning: None</p></td></tr>
+</table>
+
+<!-- End Save/Load -->
+
+<BR><BR><BR><BR>
+
+<!-- The Modal Popup boxes-->
+<!--	Save temp settings to Patch -->
+<div id="SavePatchPopup" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2 class="modalheader">Save current Settings</h2>
+    </div>
+    <div class="modal-body">
+    	<table><tr class="centercell"><td style="width:40%; padding: 5px">
+      <button class="popuptablebutton" onclick="SaveTemptoPatch()">Save</button></td><td style="font-weight: bold;">
+		G: <input type="number" id="GroupPatch" min="1" max="4" value="4">
+		B: <input type="number" id="BankPatch" min="1" max="4" value="4">
+		N: <input type="number" id="NumberPatch" min="1" max="4" value="4"></td></tr>      
+      <tr class="centercell"><td colspan="2"><p>Choose Patch number and click Save</p></td></tr></table>
+    </div>
+    <div class="modal-footer">
+      <h3>Overwrites previous settings!</h3>
+    </div>
+  </div>
+
+</div>
+
+<!-- for filedialog -->
+
+
+<div id="filedialogmodal" class="modal">
+	<div class="modal-content">
+		<table id="filedialogtable">
+			<thead class="filetablehead">
+			<tr class="filetableheader"><th class="header1cell1">Filetransfer</th><th></th>
+				<th class="header1cell3"><button id="filedialogclose" onclick="readwritecancel()">Cancel</button></th></tr>
+			<tr id="filetable2ndheader"><th class="tblheadcell1"><input type="text" id="txtFilename" value=""/>
+				<th class="tblheadcell2" ></th>
+				<th class="tblheadcell3"><button id="filedialogbtn" onclick="Filehandler()">Go</button></th></tr>
+			<tr id="filetable3rdheader"><th id="filedialogpath" colspan="3"></th></tr>
+			<tbody class="filedialogtbody">
+				<tr id="filedialogcontents" class="filedialogcontents">
+					<td class="tblcellone"></td>
+					<td class="tblcelltwo"></td>
+					<td class="tblcellthree"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</body>
+</html>
